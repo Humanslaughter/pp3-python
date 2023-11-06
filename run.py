@@ -1,3 +1,12 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
+from random import randint
+
+# Welcome message
+print('=' * 42)
+print('            -- BATTLESHIPS --')
+print('=' * 42)
+print('                 WELCOME!')
+print('')
+print('           Row: 1-8, Column: A-H')
+print('            Ships: 5, Turns: 10')
+print('=' * 42)
+print('')
