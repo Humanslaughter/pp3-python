@@ -11,10 +11,10 @@ print('            Ships: 5, Turns: 10')
 print('=' * 42)
 
 # Player and computer board
-player_board = [['_'] * 8 for x in range(8)]
-computer_board = [['_'] * 8 for x in range(8)]
-player_guess_board = [['_'] * 8 for x in range(8)]
-computer_guess_board = [['_'] * 8 for x in range(8)]
+player_board = [[' '] * 8 for x in range(8)]
+computer_board = [[' '] * 8 for x in range(8)]
+player_guess_board = [[' '] * 8 for x in range(8)]
+computer_guess_board = [[' '] * 8 for x in range(8)]
 
 let_to_num = {
     'A': 0,
@@ -28,10 +28,9 @@ let_to_num = {
 }
 
 # Label for the player and computer board
-label1 = "    [PLAYER]"
-label2 = "   [COMPUTER]"
+label1 = " PLAYER'S BOARD"
+label2 = "COMPUTER'S BOARD"
 
-# Generate player and computer board
 def print_board(board, label):
     print(f'\n {label}')
     print(' -----------------')
@@ -41,3 +40,4 @@ def print_board(board, label):
         print(f"{row_num}|{'|'.join(row)}|")
         row_num += 1
     print('')
+
