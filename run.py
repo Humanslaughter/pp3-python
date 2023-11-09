@@ -11,7 +11,7 @@ def start_game():
     print('                 WELCOME!')
     print('')
     print('           Row: 1-8, Column: A-H')
-    print('            Ships: 5, Turns: 20')
+    print('            Ships: 5, Turns: 30')
     print('=' * 42)
 
     # Board with generated ships
@@ -85,7 +85,7 @@ def start_game():
 
     generate_ships(computer_board, label2)
     generate_ships(player_board, label1)
-    turns = 20
+    turns = 30
     while turns > 0:
         # Player turn
         while True:
@@ -116,6 +116,14 @@ def start_game():
             print('PLAYER WON!')
             print('===========')
             break
+            # Restart or quit game
+            restart = input('Press Enter to restart, Q to quit: ').upper()
+            if restart == '':
+                start_game()
+            else:
+                if restart == 'Q':
+                    print('Bye!')
+                    break
         # Computer turn
         while True:
             row, column = randint(0,7), randint(0,7)
@@ -141,6 +149,14 @@ def start_game():
             print('COMPUTER WON!')
             print('=============')
             break
+            # Restart or quit game
+            restart = input('Press Enter to restart, Q to quit: ').upper()
+            if restart == '':
+                start_game()
+            else:
+                if restart == 'Q':
+                    print('Bye!')
+                    break
         # Turns left until game over
         print(''+str(turns)+' turn(s) left.')
         # Game over, 0 turns left
