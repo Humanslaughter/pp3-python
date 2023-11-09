@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "dsznajder.es7-react-js-snippets",
+        "eventyret.bootstrap-4-cdn-snippet",
+        "hookyqr.beautify",
+        "matt-rudge.auto-open-preview-panel",
+        "formulahendry.auto-close-tag",
+        "eamodio.gitlens",
+        "ms-python.isort",
+        "webfreak.debug",
+        "esbenp.prettier-vscode",
+        "ms-python.python"
+    ]
+}

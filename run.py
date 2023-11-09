@@ -1,5 +1,8 @@
 from random import randint
 
+# 'X' = ships hit
+# '*' = hits missed
+
 # Welcome message
 print('=' * 42)
 print('            -- BATTLESHIPS --')
@@ -7,12 +10,13 @@ print('=' * 42)
 print('                 WELCOME!')
 print('')
 print('           Row: 1-8, Column: A-H')
-print('            Ships: 5, Turns: 10')
+print('            Ships: 5, Turns: 20')
 print('=' * 42)
 
-# Player and computer board
+# Board with generated ships
 player_board = [[' '] * 8 for x in range(8)]
 computer_board = [[' '] * 8 for x in range(8)]
+# Guessing board with ships hidden
 player_guess_board = [[' '] * 8 for x in range(8)]
 computer_guess_board = [[' '] * 8 for x in range(8)]
 
@@ -27,8 +31,10 @@ let_to_num = {
     'H': 7
 }
 
-# Label for the player and computer board
-label1 = " PLAYER'S BOARD"
+# Board labels
+# Player's board = Computer guesses
+label1 = " PLAYER'S BOARD" 
+# Computer's board = Player guesses
 label2 = "COMPUTER'S BOARD"
 
 def print_board(board, label):
@@ -41,3 +47,16 @@ def print_board(board, label):
         row_num += 1
     print('')
 
+def get_ship_location():
+    print('Make your guess.')
+    # Enter a row number between 1 to 8
+    row = input('Row 1-8: ')
+    while row not in '12345678':
+        print('Invalid row input, please enter a number between 1-8')
+        row = input('Row 1-8: ')
+    # Enter a column letter between A to H
+    column = input('Column A-H: ').upper()
+    while column not in 'ABCDEFGH':
+        print('Invalid column input, please enter a letter between A-H')
+        column = input('Column A-H: ').upper()
+    return int(row) - 1, let_to_num[column]
