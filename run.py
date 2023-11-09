@@ -77,3 +77,9 @@ def count_hit_ships(board):
                 count += 1
     return count
 
+generate_ships(computer_board, label2)
+generate_ships(player_board, label1)
+# Print empty starting boards
+print_board(player_guess_board, label2)
+print_board(computer_guess_board, label1)
+turns = 20
