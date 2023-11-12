@@ -17,7 +17,10 @@ def start_game():
     print('Ships: 5, Turns: 30'.center(42))
     print('=' * 42)
     # Prompt the player to enter their name
-    player_name = input('Enter your name: ')
+    player_name = input('Enter your name: \n')
+    while not player_name.strip():
+        print('Invalid input, name cannot be empty')
+        player_name = input('Enter your name: \n')
 
     # Board with generated ships
     player_board = [[' '] * 8 for x in range(8)]
@@ -61,16 +64,24 @@ def start_game():
         print('Make your guess')
         print('----------------')
     # Player enter a row number between 1 to 8
-        row = input('Row 1-8: ')
-        while row not in '12345678':
-            print('Invalid input, please enter a number between 1 and 8')
-            row = input('Row 1-8: ')
+        row = input('Row 1-8: \n')
+        while row not in '12345678' or row == '':
+            if row == '':
+                print('Empty input, please enter a number between 1 and 8')
+            else:
+                print('Invalid input, please enter a number between 1 and 8')
+            row = input('Row 1-8: \n')
+
     # Player enter a column letter between A to H
-        column = input('Column A-H: ').upper()
+        column = input('Column A-H: \n').upper()
         print('----------------')
-        while column not in 'ABCDEFGH':
-            print('Invalid input, please enter a letter between A and H')
-            column = input('Column A-H: ').upper()
+        while column not in 'ABCDEFGH' or column == '':
+            if column == '':
+                print('Empty input, please enter a letter between A and H')
+            else:
+                print('Invalid input, please enter a letter between A and H')
+            column = input('Column A-H: \n').upper()
+
         return int(row) - 1, let_to_num[column]
 
     # Generates random ships for player and computer
@@ -100,7 +111,7 @@ def start_game():
     # Current player and computer score, updates each time a ship is hit
     player_score = 0
     computer_score = 0
-    turns = 30
+    turns = 1
     while turns > 0:
         # Player guess
         while True:
@@ -124,7 +135,14 @@ def start_game():
             if count_hit_ships(player_guess_board) == 5:
                 print(f"{player_name.upper()} WON THE GAME!")
                 # Restart or quit game
-                restart = input('Press Enter to restart, Q to quit: ').upper()
+                restart = input(
+                    'Press Enter to restart, Q to quit: \n'
+                ).upper()
+                while restart != '' and restart != 'Q':
+                    print('Invalid input, press Enter to restart or Q to quit')
+                    restart = input(
+                        'Press Enter to restart, Q to quit: \n'
+                    ).upper()
                 if restart == '':
                     start_game()
                 elif restart == 'Q':
@@ -149,8 +167,16 @@ def start_game():
             # Computer wins
             if count_hit_ships(computer_guess_board) == 5:
                 print('COMPUTER WON THE GAME!')
+
                 # Restart or quit game
-                restart = input('Press Enter to restart, Q to quit: ').upper()
+                restart = input(
+                    'Press Enter to restart, Q to quit: \n'
+                ).upper()
+                while restart != '' and restart != 'Q':
+                    print('Invalid input, press Enter to restart or Q to quit')
+                    restart = input(
+                        'Press Enter to restart, Q to quit: \n'
+                    ).upper()
                 if restart == '':
                     start_game()
                 elif restart == 'Q':
@@ -177,7 +203,15 @@ def start_game():
             # No turns left
             if turns == 0:
                 print('GAME OVER!')
-                restart = input('Press Enter to restart, Q to quit: ').upper()
+                # Restart or quit game
+                restart = input(
+                    'Press Enter to restart, Q to quit: \n'
+                ).upper()
+                while restart != '' and restart != 'Q':
+                    print('Invalid input, press Enter to restart or Q to quit')
+                    restart = input(
+                        'Press Enter to restart, Q to quit: \n'
+                    ).upper()
                 if restart == '':
                     start_game()
                 elif restart == 'Q':
