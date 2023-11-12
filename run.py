@@ -97,7 +97,9 @@ def start_game():
     # Player and computer results
     player_results = []
     computer_results = []
-
+    # Current player and computer score, updates each time a ship is hit
+    player_score = 0
+    computer_score = 0
     turns = 30
     while turns > 0:
         # Player guess
@@ -110,6 +112,7 @@ def start_game():
                 print_board(player_guess_board, label2.center(18))
                 turns -= 1
                 player_results.append(f"{player_name.upper()}: A HIT!")
+                player_score += 1
                 break
             else:
                 player_guess_board[row][column] = '*'
@@ -136,6 +139,7 @@ def start_game():
                 computer_guess_board[row][column] = 'X'
                 print_board(computer_guess_board, label1.center(19))
                 computer_results.append('COMPUTER: A HIT!')
+                computer_score += 1
                 break
             else:
                 computer_guess_board[row][column] = '*'
@@ -160,6 +164,11 @@ def start_game():
             print(f" {player_result:<20}")
             print('')
             print(f" {computer_result:<20}")
+            print('--------------------')
+            # Player and computer score, updates each time a ship is hit
+            print(f" {player_name.upper()}: {player_score}")
+            print('')
+            print(f" COMPUTER: {computer_score}")
             print('--------------------')
             # Turns left
             print(' '+str(turns)+' turn(s) left')
