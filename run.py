@@ -94,7 +94,10 @@ def start_game():
     generate_ships(computer_board, label2)
     generate_ships(player_board, label1)
     
-    
+    # Player and computer results
+    player_results = []
+    computer_results = []
+
     turns = 30
     while turns > 0:
         # Player guess
@@ -106,11 +109,13 @@ def start_game():
                 player_guess_board[row][column] = 'X'
                 print_board(player_guess_board, label2.center(18))
                 turns -= 1
+                player_results.append(f"{player_name.upper()}: A HIT!")
                 break
             else:
                 player_guess_board[row][column] = '*'
                 print_board(player_guess_board, label2.center(18))
                 turns -= 1
+                player_results.append(f"{player_name.upper()}: MISSED!")
                 break
             # Player wins
             if count_hit_ships(player_guess_board) == 5:   
@@ -130,10 +135,12 @@ def start_game():
             if player_board[row][column] == 'X':
                 computer_guess_board[row][column] = 'X'
                 print_board(computer_guess_board, label1.center(19))
+                computer_results.append('COMPUTER: A HIT!')
                 break
             else:
                 computer_guess_board[row][column] = '*'
                 print_board(computer_guess_board, label1.center(19))
+                computer_results.append('COMPUTER: MISSED!')
                 break
             # Computer wins
             if count_hit_ships(computer_guess_board) == 5:
@@ -146,7 +153,14 @@ def start_game():
                     print('Thanks for playing!')
                     break
 
-        
+        # Displays the result of each guessed turn with hit or miss for player and computer
+        print('')
+        print('====================')
+        for player_result, computer_result in zip(player_results, computer_results):
+            print(f" {player_result:<20}")
+            print('')
+            print(f" {computer_result:<20}")
+            print('--------------------')
             # Turns left
             print(' '+str(turns)+' turn(s) left')
             # No turns left
@@ -158,6 +172,11 @@ def start_game():
                 elif restart == 'Q':
                     print('Thanks for playing!')
                     break
+        print('====================')
+
+        # Clear old result after each turn
+        player_results.clear()
+        computer_results.clear()
 
 
 start_game()
