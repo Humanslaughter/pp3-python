@@ -111,7 +111,7 @@ def start_game():
     # Current player and computer score, updates each time a ship is hit
     player_score = 0
     computer_score = 0
-    turns = 1
+    turns = 30
     while turns > 0:
         # Player guess
         while True:
