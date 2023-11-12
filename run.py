@@ -2,17 +2,22 @@ from random import randint
 
 # 'X' = ships hit
 # '*' = turns missed
+# Player's board = The computer's guesses displayed
+# Computer's board = The player's guesses displayed
 
 def start_game():
 # Welcome message
     print('=' * 42)
-    print('            -- BATTLESHIPS --')
+    print('-- BATTLESHIPS --'.center(42))
     print('=' * 42)
-    print('                 WELCOME!')
+    print('WELCOME!'.center(42))
     print('')
-    print('           Row: 1-8, Column: A-H')
-    print('            Ships: 5, Turns: 30')
+    print('Row: 1-8, Column: A-H'.center(42))
+    print('Ships: 5, Turns: 30'.center(42))
     print('=' * 42)
+    
+    # Prompt the player to enter their name
+    player_name = input('Enter your name: ')
 
     # Board with generated ships
     player_board = [[' '] * 8 for x in range(8)]
@@ -33,48 +38,50 @@ def start_game():
     }
 
     # Board labels
-    # Player's board = Computer guesses
-    label1 = " PLAYER'S BOARD" 
-    # Computer's board = Player guesses
+    label1 = f"{player_name.upper()}'S BOARD"
     label2 = "COMPUTER'S BOARD"
 
-
+    # Prints the board
     def print_board(board, label):
         print(f'\n {label}')
-        print(' -----------------')
-        print('  A B C D E F G H')
+        print('-----------------'.center(21))
+        print('A B C D E F G H'.center(21))
         row_num = 1
         for row in board:
-            print(f"{row_num}|{'|'.join(row)}|")
+            print(f"{str(row_num).rjust(2)}|{'|'.join(row)}|")
             row_num += 1
-        print('')
-    # Print empty starting boards
-    print_board(player_guess_board, label2)
-    print_board(computer_guess_board, label1)
 
+    # Prints empty starter boards for player and computer
+    print_board(player_guess_board, label2.center(18))
+    print_board(computer_guess_board, label1.center(19))
+
+    # Player guess ship locations on the computer board
     def get_ship_location():
         print('')
-        print('Make your guess.')
-        # Enter a row number between 1 to 8
+        print('Make your guess')
+        print('----------------')
+    # Player enter a row number between 1 to 8
         row = input('Row 1-8: ')
         while row not in '12345678':
-            print('Invalid row input, please enter a number between 1-8')
+            print('Invalid row input, please enter a number between 1 and 8')
             row = input('Row 1-8: ')
-        # Enter a column letter between A to H
+    # Player enter a column letter between A to H
         column = input('Column A-H: ').upper()
+        print('----------------')
         while column not in 'ABCDEFGH':
-            print('Invalid column input, please enter a letter between A-H')
+            print('Invalid column input, please enter a letter between A and H')
             column = input('Column A-H: ').upper()
         return int(row) - 1, let_to_num[column]
 
-    # Generate random ships for player and computer
+    # Generates random ships for player and computer
     def generate_ships(board, label):
         for ship in range(5):
             ship_row, ship_column = randint(0,7), randint(0,7)
             while board[ship_row][ship_column] == 'X':
                 ship_row, ship_column = get_ship_location()
             board[ship_row][ship_column] = 'X'
-
+    
+    # Counts amount of ships that's hit
     def count_hit_ships(board):
         count = 0
         for row in board:
@@ -82,96 +89,75 @@ def start_game():
                 if column == 'X':
                     count += 1
         return count
-
+    
+    # Generate ships on player and computer board
     generate_ships(computer_board, label2)
     generate_ships(player_board, label1)
+    
+    
     turns = 30
     while turns > 0:
-        # Player turn
+        # Player guess
         while True:
             row, column = get_ship_location()
             if player_guess_board[row][column] == '*':
-                print("You already guessed that, try again.")
+                print("You've guessed that already, try again!")
             elif computer_board[row][column] == 'X':
-                print('')
-                print('===========')
-                print('PLAYER HIT!')
-                print('===========')
                 player_guess_board[row][column] = 'X'
-                print_board(player_guess_board, label2)
+                print_board(player_guess_board, label2.center(18))
                 turns -= 1
                 break
             else:
-                print('')
-                print('============')
-                print('PLAYER MISS!')
-                print('============')
                 player_guess_board[row][column] = '*'
-                print_board(player_guess_board, label2)
+                print_board(player_guess_board, label2.center(18))
                 turns -= 1
                 break
-        if count_hit_ships(player_guess_board) == 5:
-            print('')
-            print('===========')
-            print('PLAYER WON!')
-            print('===========')
-            break
-            # Restart or quit game
-            restart = input('Press Enter to restart, Q to quit: ').upper()
-            if restart == '':
-                start_game()
-            else:
-                if restart == 'Q':
-                    print('Bye!')
+            # Player wins
+            if count_hit_ships(player_guess_board) == 5:   
+                print(f"{player_name.upper()} WON THE GAME!")
+                # Restart or quit game
+                restart = input('Press Enter to restart, Q to quit: ').upper()
+                if restart == '':
+                    start_game()
+                elif restart == 'Q':
+                    print('Thanks for playing!')
                     break
-        # Computer turn
+        # Computer guess
         while True:
             row, column = randint(0,7), randint(0,7)
             while computer_guess_board[row][column] == '*':
                 row, column = randint(0,7), randint(0,7)
             if player_board[row][column] == 'X':
-                print('=============')
-                print('COMPUTER HIT!')
-                print('=============')
                 computer_guess_board[row][column] = 'X'
-                print_board(computer_guess_board, label1)
+                print_board(computer_guess_board, label1.center(19))
                 break
             else:
-                print('==============')
-                print('COMPUTER MISS!')
-                print('==============')
                 computer_guess_board[row][column] = '*'
-                print_board(computer_guess_board, label1)
+                print_board(computer_guess_board, label1.center(19))
                 break
-        if count_hit_ships(computer_guess_board) == 5:
-            print('')
-            print('=============')
-            print('COMPUTER WON!')
-            print('=============')
-            break
-            # Restart or quit game
-            restart = input('Press Enter to restart, Q to quit: ').upper()
-            if restart == '':
-                start_game()
-            else:
-                if restart == 'Q':
-                    print('Bye!')
+            # Computer wins
+            if count_hit_ships(computer_guess_board) == 5:
+                print('COMPUTER WON THE GAME!')
+                # Restart or quit game
+                restart = input('Press Enter to restart, Q to quit: ').upper()
+                if restart == '':
+                    start_game()
+                elif restart == 'Q':
+                    print('Thanks for playing!')
                     break
-        # Turns left until game over
-        print(''+str(turns)+' turn(s) left.')
-        # Game over, 0 turns left
-        if turns == 0:
-            print('')
-            print('==========')
-            print('GAME OVER!')
-            print('==========')
-            print('')
-            # Restart or quit game
-            restart = input('Press Enter to restart, Q to quit: ').upper()
-            if restart == '':
-                start_game()
-            else:
-                if restart == 'Q':
-                    print('Bye!')
+
+        
+            # Turns left
+            print(' '+str(turns)+' turn(s) left')
+            # No turns left
+            if turns == 0:
+                print('GAME OVER!')
+                restart = input('Press Enter to restart, Q to quit: ').upper()
+                if restart == '':
+                    start_game()
+                elif restart == 'Q':
+                    print('Thanks for playing!')
                     break
+
+
 start_game()
