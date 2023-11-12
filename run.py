@@ -5,8 +5,9 @@ from random import randint
 # Player's board = The computer's guesses displayed
 # Computer's board = The player's guesses displayed
 
+
 def start_game():
-# Welcome message
+    # Welcome message
     print('=' * 42)
     print('-- BATTLESHIPS --'.center(42))
     print('=' * 42)
@@ -15,7 +16,6 @@ def start_game():
     print('Row: 1-8, Column: A-H'.center(42))
     print('Ships: 5, Turns: 30'.center(42))
     print('=' * 42)
-    
     # Prompt the player to enter their name
     player_name = input('Enter your name: ')
 
@@ -63,24 +63,24 @@ def start_game():
     # Player enter a row number between 1 to 8
         row = input('Row 1-8: ')
         while row not in '12345678':
-            print('Invalid row input, please enter a number between 1 and 8')
+            print('Invalid input, please enter a number between 1 and 8')
             row = input('Row 1-8: ')
     # Player enter a column letter between A to H
         column = input('Column A-H: ').upper()
         print('----------------')
         while column not in 'ABCDEFGH':
-            print('Invalid column input, please enter a letter between A and H')
+            print('Invalid input, please enter a letter between A and H')
             column = input('Column A-H: ').upper()
         return int(row) - 1, let_to_num[column]
 
     # Generates random ships for player and computer
     def generate_ships(board, label):
         for ship in range(5):
-            ship_row, ship_column = randint(0,7), randint(0,7)
+            ship_row, ship_column = randint(0, 7), randint(0, 7)
             while board[ship_row][ship_column] == 'X':
                 ship_row, ship_column = get_ship_location()
             board[ship_row][ship_column] = 'X'
-    
+
     # Counts amount of ships that's hit
     def count_hit_ships(board):
         count = 0
@@ -89,11 +89,11 @@ def start_game():
                 if column == 'X':
                     count += 1
         return count
-    
+
     # Generate ships on player and computer board
     generate_ships(computer_board, label2)
     generate_ships(player_board, label1)
-    
+
     # Player and computer results
     player_results = []
     computer_results = []
@@ -121,7 +121,7 @@ def start_game():
                 player_results.append(f"{player_name.upper()}: MISSED!")
                 break
             # Player wins
-            if count_hit_ships(player_guess_board) == 5:   
+            if count_hit_ships(player_guess_board) == 5:
                 print(f"{player_name.upper()} WON THE GAME!")
                 # Restart or quit game
                 restart = input('Press Enter to restart, Q to quit: ').upper()
@@ -132,9 +132,9 @@ def start_game():
                     break
         # Computer guess
         while True:
-            row, column = randint(0,7), randint(0,7)
+            row, column = randint(0, 7), randint(0, 7)
             while computer_guess_board[row][column] == '*':
-                row, column = randint(0,7), randint(0,7)
+                row, column = randint(0, 7), randint(0, 7)
             if player_board[row][column] == 'X':
                 computer_guess_board[row][column] = 'X'
                 print_board(computer_guess_board, label1.center(19))
@@ -157,10 +157,12 @@ def start_game():
                     print('Thanks for playing!')
                     break
 
-        # Displays the result of each guessed turn with hit or miss for player and computer
+        # Displays result of each turn with hit or miss for player and computer
         print('')
         print('====================')
-        for player_result, computer_result in zip(player_results, computer_results):
+        for player_result, computer_result in zip(
+            player_results, computer_results
+        ):
             print(f" {player_result:<20}")
             print('')
             print(f" {computer_result:<20}")
